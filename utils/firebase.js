@@ -20,6 +20,8 @@ import {
     onAuthStateChanged,
 } from 'firebase/auth';
 
+import { getStorage, ref, getDownloadURL, uploadBytes } from 'firebase/storage'
+
 import 'firebase/firestore';
 
 const firebaseConfig = {
@@ -32,6 +34,8 @@ const firebaseConfig = {
 }
 
 export const app = initializeApp(firebaseConfig);
+
+export const storage = getStorage(app, "gs://recipe-app-4bee7.appspot.com")
 
 export const db = getFirestore(app);
 
@@ -116,6 +120,7 @@ export const getCategories = async () => {
   try{
     const querySnapshot = await getDocs(categoriesRef);
     const categories = querySnapshot.docs.map((doc) => doc.data());
+
     return categories;
   } catch (error) {
     console.log(error);
@@ -141,7 +146,7 @@ export const getRecipesByCategory = async (category) => {
 
 export const AddNewRecipe = async (data) => {
   const db = getFirestore(app);
-  await setDoc(doc(db, "Categories", data.category, "recipes", data.slug), data);
+  await setDoc(doc(db, `Categories/${data.category}/recipes/${data.slug}`), data);
   return console.log(data)
 }
 
@@ -158,4 +163,5 @@ export const getIndividualRecipe = async(categoryId, slug) => {
     console.log('No such document')
   }
 }
+
 

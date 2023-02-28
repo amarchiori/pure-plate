@@ -12,6 +12,8 @@ export default function AddRecipe() {
       category: '',
       title: '',
       slug: '',
+      servingSize: '',
+      cookTime: '',
       description: '',
       ingredients: [{ name: '', amount: ''}],
       steps: [{value: ''}]
@@ -39,7 +41,7 @@ export default function AddRecipe() {
 
 
   const onSubmit = async (data) => {
-    setValue('slug', slug)
+    await setValue('slug', slug)
     await AddNewRecipe(data);
 
     alert(`Added new recipe ${data.title}`)
@@ -76,6 +78,31 @@ export default function AddRecipe() {
                 className="form-input recipeInput w-full"
             />
             {errors.title && <span>This field is required</span>}
+        </div>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 mb-10">
+        <div>
+          <label className="block mb-2 text-md font-bold">
+            Serving Size
+          </label>
+          <input 
+            type="number" 
+            className="recipeInput w-full"
+            {...register('servingSize', {required: true})}
+          />
+          {errors.servingSize && <span>This field is required</span>}
+        </div>
+        <div >
+            <label className="block mb-2 text-md font-bold">
+                Cook Time
+            </label>
+            <input 
+                type="text"
+                {...register('cookTime', {required: true})} 
+                className="form-input recipeInput w-full"
+            />
+            {errors.cookTime && <span>This field is required</span>}
         </div>
       </div>
       
