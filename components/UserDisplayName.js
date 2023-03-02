@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db} from '../utils/firebase'
+import { db} from '../utils/firebase'
+import { UserContext } from '@/utils/UserProvider';
 
 export default function UserDisplay() {
-    const [user] = useAuthState(auth);
+    const { user } = useContext(UserContext)
     const [displayName, setDisplayName] = useState(null);
   
     useEffect(() => {

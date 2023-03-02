@@ -7,6 +7,8 @@ import {
     onAuthStateChanged,
 } from 'firebase/auth';
 
+import {doc, getDoc} from 'firebase/firestore'
+
 import { db, app} from '../firebase'
 
 export const auth = getAuth(app);

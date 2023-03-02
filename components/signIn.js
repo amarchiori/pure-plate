@@ -3,11 +3,7 @@ import { useRouter } from 'next/router';
 import Link from "next/link";
 import Image from "next/image";
 import cookingTogether from '../public/undraw_cooking.svg';
-import {
-    auth,
-    signInWithGooglePopup,
-} from '../utils/firebase';
-
+import { signInWithGooglePopup, auth } from '@/utils/auth/auth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const SignIn = () => {
