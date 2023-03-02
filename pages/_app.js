@@ -1,13 +1,13 @@
 import Layout from "@/components/Layout/Layout"
-import { UserProvider } from "@/utils/UserProvider"
+import { UserContextProvider } from "@/utils/UserProvider"
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }) {
   return(
-    <UserProvider>
+    <UserContextProvider>
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </UserProvider>
+    </UserContextProvider>
   ) 
 }

@@ -9,8 +9,8 @@ const Recipe = ({ recipes, category }) => {
 
   return (
     <div className="mx-auto max-w-7xl px-6 lg:px-8 pt-6 h-screen">
-      <div class="mx-auto max-w-2xl lg:mx-0">
-        <h2 class="text-3xl font-bold font-All-Round-Gothic tracking-tight text-gray-900 sm:text-4xl">{category} recipes</h2>
+      <div className="mx-auto max-w-2xl lg:mx-0">
+        <h2 className="text-3xl font-bold font-All-Round-Gothic tracking-tight text-gray-900 sm:text-4xl">{category} recipes</h2>
       </div>
       <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-y-16 gap-x-8 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
       {recipes && recipes.map((recipe) => (

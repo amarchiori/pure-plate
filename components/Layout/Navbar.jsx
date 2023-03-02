@@ -1,6 +1,8 @@
 import { auth, signOutUser } from "@/utils/auth/auth";
 import { useIdToken } from "react-firebase-hooks/auth";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
     const [user] = useIdToken(auth)
@@ -16,10 +18,18 @@ const Navbar = () => {
                 {user ? (
                         <span onClick={signOutUser}>SIGN OUT</span>
                 ) : (
-                    <Link href={'/sign-in'}>SIGN IN</Link>
-                )
+                    <Link href={'/authentication'}>SIGN IN</Link>
+                )}
 
-                }
+                {user ? (
+                        <Link className="text-rose-600" href={'/profile'}>
+                            <FontAwesomeIcon 
+                                icon={faHeart}
+                        />
+                        </Link>
+                ) : (
+                    null
+                )}
             </div>
         </nav>
     </header>

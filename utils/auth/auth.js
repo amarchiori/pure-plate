@@ -1,35 +1,48 @@
+import { db, app} from '../firebase'
+import {doc, setDoc, getDoc} from 'firebase/firestore'
 import { 
     getAuth, 
     signInWithPopup, 
     GoogleAuthProvider,
     createUserWithEmailAndPassword, 
     signOut,
-    onAuthStateChanged,
+    GithubAuthProvider,
 } from 'firebase/auth';
 
-import {doc, getDoc} from 'firebase/firestore'
-
-import { db, app} from '../firebase'
 
 export const auth = getAuth(app);
 
-const googleProvider = new GoogleAuthProvider();
 
-export const signInWithGooglePopup = () =>
-  signInWithPopup(auth, googleProvider);
+const googleProvider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
+
+export const signInWithGooglePopup = async () => {
+        const credentials = await signInWithPopup(auth, googleProvider);
+        const displayName = credentials.user.displayName
+        await createUserDocumentFromAuth(credentials.user, {displayName});
+        return  console.log(credentials);
+}
+
+export const signInWithGitHubPopup = async () => {
+        const credentials = await signInWithPopup(auth, githubProvider);
+        const displayName = credentials.user.displayName
+        await createUserDocumentFromAuth(credentials.user, {displayName});
+        return  console.log(credentials);
+}
+
 
 
 export const createUserDocumentFromAuth = async (
-    userAuth,
+    user,
     additionalInformation = {}
   ) => {
-    if (!userAuth) return;
+    if (!user) return;
   
-    const userDocRef = doc(db, 'users', userAuth.uid);
+    const userDocRef = doc(db, 'users', user.uid);
     const userSnapshot = await getDoc(userDocRef);
   
     if (!userSnapshot.exists()) {
-      const { displayName, email } = userAuth;
+      const { displayName, email } = user;
       const createdAt = new Date();
   
       try {
@@ -55,5 +68,3 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
   
 export const signOutUser = async () => await signOut(auth);
   
-export const onAuthStateChangedListener = (callback) =>
-    onAuthStateChanged(auth, callback);
