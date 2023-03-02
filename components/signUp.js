@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '@/utils/firebase';
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '@/utils/auth/auth';
 
 
 const SignUp = () => {

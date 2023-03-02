@@ -1,4 +1,5 @@
-import { auth, getCategories } from '../utils/firebase';
+import { getCategories } from '@/utils/firestore/firestore';
+import { auth } from '@/utils/auth/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Link from 'next/link';
 import UserDisplay from '@/components/UserDisplayName';
@@ -17,7 +18,7 @@ const Home = ({ categories }) => {
 
   return (
     <div className="h-screen">
-      <div className="flex font-All-Round-Gothic flex-col text-5xl items-center justify-center h-2/4">
+      <div className="flex font-All-Round-Gothic flex-col text-5xl items-center justify-center h-2/5">
         {
           user ? (
             <UserDisplay className="font-normal"/>
@@ -27,11 +28,11 @@ const Home = ({ categories }) => {
           </h1> 
         )}
       </div>
-      <div className="h-2/4 flex overflow-x-scroll space-x-5 ">
+      <div className="h-2/5 flex overflow-x-auto space-x-5 snap-x">
           {categories && categories.map((category) => (
             <div 
               key={category.name} 
-              className='grid grid-col-4 relative aspect-square font-Sabon place-items-center mb-10'>
+              className='snap-center relative aspect-square font-Sabon place-items-center mb-10'>
              <Image 
                   src={category.imageUrl} 
                   alt={category.imageUrl} 
@@ -53,7 +54,7 @@ const Home = ({ categories }) => {
   )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const categories = await getCategories();
 
 

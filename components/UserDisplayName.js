@@ -24,10 +24,6 @@ export default function UserDisplay() {
   
       getUserDisplayName();
     }, [user]);
-  
-    if (!displayName) {
-      return <div>Hello...</div>;
-    }
-  
+    
     return <div>Welcome, {displayName}!</div>;
   }

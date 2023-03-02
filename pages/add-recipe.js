@@ -1,5 +1,5 @@
 import { useFieldArray, useForm } from "react-hook-form";
-import { AddNewRecipe } from "@/utils/firebase";
+import { AddNewRecipe } from "@/utils/firestore/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";

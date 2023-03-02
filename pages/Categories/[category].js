@@ -1,4 +1,4 @@
-import { getRecipesByCategory } from "@/utils/firebase";
+import { getRecipesByCategory } from "@/utils/firestore/firestore";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";

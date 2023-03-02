@@ -1,4 +1,4 @@
-import { auth, signOutUser } from "@/utils/firebase";
+import { auth, signOutUser } from "@/utils/auth/auth";
 import { useIdToken } from "react-firebase-hooks/auth";
 import Link from "next/link";
 
@@ -6,7 +6,7 @@ const Navbar = () => {
     const [user] = useIdToken(auth)
 
   return (
-    <header className="bg-white font-All-Round-Gothic text-xl mt-4">
+    <header className="bg-white border-rosyBrown border-b font-All-Round-Gothic text-xl">
         <nav className="flex justify-between p-6">
             <Link href={'/'}>
                 <h1 className="font-bold">Pure Plate</h1>
