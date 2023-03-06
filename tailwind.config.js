@@ -12,16 +12,16 @@ module.exports = {
     },
     extend: {
       colors: {
-        lightOrange: '#f07167',
+        lightOrange: '#FF4400',
         peach: '#fed9b7',
-        softWhite: '#fdfcdc',
+        softGrey: '#e4e4e4',
         lightTeal: '#00afb9',
         darkTeal: '#0081a7',
         youngYellow: '#e9ea73',
         freshGreen: '#009780',
-        earth: '#984527',
+        earth: '#362C28',
         rosyBrown: '#D5A18E',
-        spaceCadet: '#1F2041'
+        spaceCadet: '#191919',
       },
     },
   },

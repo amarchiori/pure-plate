@@ -1,22 +1,26 @@
-import { useFieldArray, useForm } from "react-hook-form";
-import { AddNewRecipe } from "@/utils/firestore/firestore";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 import { useRouter } from "next/router";
+import { useFieldArray, useForm } from "react-hook-form";
+import { storage } from "@/utils/firebase";
+import { ref, getDownloadURL, uploadBytes} from "firebase/storage";
+import { AddNewRecipe } from "@/utils/firestore/firestore";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function AddRecipe() {
-  const router = useRouter();
-  const { register, setValue, formState: {errors}, watch, control, handleSubmit, isSubmitting 
+  const [imageUpload, setImageUpload] = useState(null)
+  const { register, setValue, formState: {errors}, watch, control, handleSubmit, isSubmitting, 
   } = useForm({
     defaultValues: {
       category: '',
+      imageUrl: '',
       title: '',
       slug: '',
       servingSize: '',
       cookTime: '',
       description: '',
       ingredients: [{ name: '', amount: ''}],
-      steps: [{value: ''}]
+      steps: [{value: ''}],
     }
   });
 
@@ -36,22 +40,46 @@ export default function AddRecipe() {
     }
   })
 
+  const uploadImage = () => {
+    if (imageUpload == null) return;
+    const imageRef = ref(storage, `userUploads/${imageUpload.name}`);
+    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((downloadURL) => {
+        setValue('imageUrl', downloadURL);
+        console.log(downloadURL)
+      })
+    })
+  }
+
   const titleExist = watch('title');
   const slug = titleExist ? titleExist.toLowerCase().replace(/\s+/g, '-') : '';
 
 
   const onSubmit = async (data) => {
-    await setValue('slug', slug)
+    await setValue('slug', slug);
     await AddNewRecipe(data);
-
-    alert(`Added new recipe ${data.title}`)
-   
   }
-
   
   return (
     <div className="m-5 sm:w-10/12 md:w-7/12 sm:m-auto">
-    <h1 className="text-freshGreen font-All-Round-Gothic text-center mt-10 mb-20 text-xl md:text-3xl">Add and Share to Friends and Family </h1>
+    <h1 className="text-freshGreen font-All-Round-Gothic text-center mt-10 mb-20 text-xl md:text-3xl">
+      Add and Share to Friends and Family 
+    </h1>
+    <div className="flex w-full mx-5 my-10 font-Sabon justify-left">
+      <input 
+        className=" text-slate-500 
+              file:mr-4 file:py-2 file:px-4
+              file:rounded-full file:border-0
+              file:text-sm file:font-semibold
+              file:bg-softGrey-50 file:text-lightOrange"
+          type='file'
+          onChange={(e) => {setImageUpload(e.target.files[0])}}
+        />
+        <button 
+          className="font-bold text-lightOrange"
+          onClick={uploadImage}
+        >UPLOAD IMAGE</button>
+    </div>
     <form onSubmit={handleSubmit(onSubmit)} className='m-5 font-Sabon text-spaceCadet'>
       <div className="grid gap-6 md:grid-cols-2 mb-10">
         <div>
@@ -161,7 +189,7 @@ export default function AddRecipe() {
         >
           Add Ingredient
         </button>
-        <p>{errors.ingredients?.root?.message}</p>
+        <p>{errors?.ingredients?.root?.message}</p>
       </div>
 
   {/* Instructions Section */}
@@ -171,10 +199,10 @@ export default function AddRecipe() {
         </label>
       {stepFields.map((field, index) => {
           return (
-            <section key={field.id} className='flex flex-row justify-end gap-x-3'>
+            <section key={field.id} className='flex flex-row justify-end gap-x-3 md-2'>
               <div className="basis-11/12">
                 <label className="block mb-2 text-sm">
-                    <span>{index ? `Step ${index}:` : 'Step 0 Prep:'}</span>
+                    <span>{index ? `Step ${index}:` : 'Prep:'}</span>
                 </label>
                 <textarea 
                   className="block recipeInput w-full"

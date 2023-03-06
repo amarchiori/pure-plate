@@ -42,7 +42,8 @@ export const getCategories = async () => {
   
   export const AddNewRecipe = async (data) => {
     const db = getFirestore(app);
-    await setDoc(doc(db, `Categories/${data.category}/recipes/${data.slug}`), data);
+    const docRef = doc(db, "Categories", data.category, "recipes", data.slug)
+    await setDoc(docRef, data);
     return console.log(data)
   }
   

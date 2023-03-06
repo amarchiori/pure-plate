@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db} from '../utils/firebase'
-import { UserContext } from '@/utils/UserProvider';
+import { UserContext } from '@/contexts/UserProvider';
 
 export default function UserDisplay() {
     const { user } = useContext(UserContext)
@@ -25,5 +25,5 @@ export default function UserDisplay() {
       getUserDisplayName();
     }, [user]);
     
-    return <div>Welcome, {displayName}!</div>;
+    return <div className='text-center'>Welcome, <br/> {displayName}!</div>;
   }

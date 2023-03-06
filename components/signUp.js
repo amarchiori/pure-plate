@@ -4,7 +4,7 @@ import {
     createAuthUserWithEmailAndPassword, 
     createUserDocumentFromAuth,
 } from '@/utils/auth/auth';
-import Link from 'next/link';
+
 
 
 const SignUp = () => {
@@ -110,13 +110,6 @@ const SignUp = () => {
                         {errors.password && <span>This field is required and must be at least 8 characters long</span>}
                         </label>
                     </div>
-                    {/* <div className="form-group form-check text-center mb-6">
-                        <input type="checkbox"
-                            className="form-check-input text-earth appearance-none h-4 w-4 border active:bg-earth border-earth rounded-sm bg-white checked:bg-earth checked:border-earth focus:outline-none focus:ring-earth transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer hover:bg-earth"
-                            defaultChecked
-                        />
-                        <label className="form-check-label inline-block text-gray-800">Subscribe to our newsletter</label>
-                    </div> */}
                     <button 
                         type="submit"
                         disabled={isSubmitting} 

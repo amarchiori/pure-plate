@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { signInWithGitHubPopup,signInWithGooglePopup, auth } from '@/utils/auth/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import Link from "next/link";
 
 const SignIn = () => {
     const [user] = useAuthState(auth);

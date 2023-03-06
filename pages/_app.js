@@ -1,13 +1,16 @@
 import Layout from "@/components/Layout/Layout"
-import { UserContextProvider } from "@/utils/UserProvider"
+import { FavoriteProvider } from "@/contexts/FavoriteContext"
+import { UserContextProvider } from "@/contexts/UserProvider"
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }) {
   return(
     <UserContextProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <FavoriteProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </FavoriteProvider>
     </UserContextProvider>
   ) 
 }
