@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
 import { useFieldArray, useForm } from "react-hook-form";
 import { storage } from "@/utils/firebase";
 import { ref, getDownloadURL, uploadBytes} from "firebase/storage";
 import { AddNewRecipe } from "@/utils/firestore/firestore";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from 'react-toastify';
 import withAuth from "@/utils/withAuth";
 
 const AddRecipe = () => {
@@ -47,7 +47,7 @@ const AddRecipe = () => {
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((downloadURL) => {
         setValue('imageUrl', downloadURL);
-
+        toast.success('Upload Complete!')
         console.log(downloadURL)
       })
     })
@@ -62,7 +62,7 @@ const AddRecipe = () => {
     setValue('slug', slug);
     await AddNewRecipe(data);
     reset();
-    
+    return true;
   }
   
   return (

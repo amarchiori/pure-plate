@@ -5,8 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeartCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { FavoriteContext } from "@/contexts/FavoriteContext";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from '../../../utils/auth/auth'
 
 function IndividualRecipe({ recipeData }) {
+  const [user] = useAuthState(auth);
   const router = useRouter();
   const { category, slug } = router.query;
   const { addItemToFav } = useContext(FavoriteContext);
@@ -20,12 +23,16 @@ function IndividualRecipe({ recipeData }) {
 
           <div className="h-full sm:h-[50vh] sm:flex mb-10 w-full">
             <div className="md:w-6/12 mb-10 w-full h-full bg-softGrey/60 p-6 lg:p-8 text-center flex flex-col justify-around">
-              <button onClick={addRecipeToFav}>
+              { user ? (
+                <button onClick={addRecipeToFav}>
                 <FontAwesomeIcon 
                   icon={faHeartCirclePlus}
                   className="text-lightOrange" 
                 />
               </button>
+              ) : (
+                null
+              )}
               <h2 className="text-xl font-bold font-All-Round-Gothic text-gray-900 md:text-3xl">
                 {recipeData.title}
               </h2>
@@ -54,16 +61,21 @@ function IndividualRecipe({ recipeData }) {
                 src={recipeData.imageUrl} 
                 alt={recipeData.imageUrl} 
                 fill
-                className="overflow-hidden object-cover"
-                sizes="50vw"
+                quality={50}
+                sizes="(min-width: 60em) 24vw,
+                (min-width: 28em) 45vw,
+                  100vw"
               />
               ): (
                 <Image 
                 src={category.imageUrl} 
                 alt={category.imageUrl} 
                 fill
+                quality={50}
                 className="overflow-hidden object-cover"
-                sizes="50vw"
+                sizes="(min-width: 60em) 24vw,
+                (min-width: 28em) 45vw,
+                  100vw"
               />
               )}
               

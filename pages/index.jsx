@@ -38,7 +38,10 @@ const Home = ({ categories }) => {
                   alt={category.imageUrl} 
                   fill
                   className="overflow-hidden rounded-full shadow-lg object-cover"
-                  sizes="50vw">
+                  quality={50}
+                  sizes="(min-width: 60em) 24vw,
+                        (min-width: 28em) 45vw,
+                          100vw">
                 </Image>
               <div className='absolute inset-0 flex flex-col justify-center items-center text-white font-bold'>
                 <Link 
