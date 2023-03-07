@@ -6,17 +6,13 @@ import { ref, getDownloadURL, uploadBytes} from "firebase/storage";
 import { AddNewRecipe } from "@/utils/firestore/firestore";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/utils/auth/auth";
 
 export default function AddRecipe() {
-  const [ user ] = useAuthState(auth)
   const [imageUpload, setImageUpload] = useState(null)
   const { register, setValue, formState: {errors}, watch, control, handleSubmit, isSubmitting, reset,
   } = useForm({
     defaultValues: {
       category: '',
-      userUID: '',
       imageUrl: '',
       title: '',
       slug: '',
@@ -58,13 +54,11 @@ export default function AddRecipe() {
 
   const titleExist = watch('title');
   const slug = titleExist ? titleExist.toLowerCase().replace(/\s+/g, '-') : '';
-  const userUID = user.uid;
 
 
 
   const onSubmit = async (data) => {
     setValue('slug', slug);
-    setValue('userUID', userUID);
     await AddNewRecipe(data);
     reset();
     
