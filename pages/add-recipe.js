@@ -50,6 +50,7 @@ export default function AddRecipe() {
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((downloadURL) => {
         setValue('imageUrl', downloadURL);
+
         console.log(downloadURL)
       })
     })
@@ -58,6 +59,7 @@ export default function AddRecipe() {
   const titleExist = watch('title');
   const slug = titleExist ? titleExist.toLowerCase().replace(/\s+/g, '-') : '';
   const userUID = user.uid;
+
 
 
   const onSubmit = async (data) => {
