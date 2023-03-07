@@ -6,8 +6,9 @@ import { ref, getDownloadURL, uploadBytes} from "firebase/storage";
 import { AddNewRecipe } from "@/utils/firestore/firestore";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import withAuth from "@/utils/withAuth";
 
-export default function AddRecipe() {
+const AddRecipe = () => {
   const [imageUpload, setImageUpload] = useState(null)
   const { register, setValue, formState: {errors}, watch, control, handleSubmit, isSubmitting, reset,
   } = useForm({
@@ -245,3 +246,5 @@ export default function AddRecipe() {
   </div>
   )
 }
+
+export default withAuth(AddRecipe)
