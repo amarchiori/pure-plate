@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 const Recipe = ({ recipes, category }) => {
-
   console.log(recipes);
 
   return (
@@ -17,16 +16,20 @@ const Recipe = ({ recipes, category }) => {
               <div className="relative hidden sm:block h-auto w-11/12">
               <Image 
                   src={recipe.imageUrl}
-                  alt={recipe.imageUrl}
+                  alt={recipe.title}
                   fill
-                  sizes="50vw"
+                  sizes="(min-width: 60em) 24vw,
+                        (min-width: 28em) 45vw,
+                          100vw"
+                  quality={50}
+                  loading="lazy"
                   className="object-cover overflow-hidden"
               />
               </div>
               <div className="p-5 ">
                   <div className="sm:flex sm:flex-col">
                       <p className="mb-2 text-xl tracking-wide font-All-Round-Gothic text-gray-900">
-                      {recipe.title.toUpperCase()}
+                      {recipe.title}
                       </p>
                       <p className="mb-3 font-Sabon text-sm text-gray-700">
                       {recipe.description}

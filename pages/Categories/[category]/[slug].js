@@ -15,10 +15,10 @@ function IndividualRecipe({ recipeData }) {
 
   return (
   <>
-    <div className="mx-auto max-w-7xl px-6 lg:px-10 pt-10 md:pt-20 font-Sabon">
+    <div className="mx-auto px-6 lg:px-10 pt-10 md:pt-20 font-Sabon">
         <div className="flex justify-center items-center flex-wrap">
 
-          <div className="h-full sm:h-[50vh] sm:flex mb-10">
+          <div className="h-full sm:h-[50vh] sm:flex mb-10 w-full">
             <div className="md:w-6/12 mb-10 w-full h-full bg-softGrey/60 p-6 lg:p-8 text-center flex flex-col justify-around">
               <button onClick={addRecipeToFav}>
                 <FontAwesomeIcon 

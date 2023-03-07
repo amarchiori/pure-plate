@@ -17,19 +17,21 @@ const Navbar = () => {
                 <h1 className="font-bold text-freshGreen">Pure Plate</h1>
             </Link>
             <div className="flex space-x-5">
-                <Link 
-                    href={'/add-recipe'}
-                    className="hover:scale-125"
-                >
-                    ADD RECIPE
-                </Link>
                 {user ? (
+                    <>
+                        <Link 
+                            href={'/add-recipe'}
+                            className="hover:scale-125"
+                        >
+                            ADD RECIPE
+                        </Link>
                         <span 
                             onClick={signOutUser}
                             className="hover:scale-125"
                         >
                             SIGN OUT
                         </span>
+                    </>
                 ) : (
                     <Link 
                         href={'/authentication'}

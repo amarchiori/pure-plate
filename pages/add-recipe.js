@@ -4,15 +4,19 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { storage } from "@/utils/firebase";
 import { ref, getDownloadURL, uploadBytes} from "firebase/storage";
 import { AddNewRecipe } from "@/utils/firestore/firestore";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/utils/auth/auth";
 
 export default function AddRecipe() {
+  const [ user ] = useAuthState(auth)
   const [imageUpload, setImageUpload] = useState(null)
-  const { register, setValue, formState: {errors}, watch, control, handleSubmit, isSubmitting, 
+  const { register, setValue, formState: {errors}, watch, control, handleSubmit, isSubmitting, reset,
   } = useForm({
     defaultValues: {
       category: '',
+      userUID: '',
       imageUrl: '',
       title: '',
       slug: '',
@@ -53,11 +57,15 @@ export default function AddRecipe() {
 
   const titleExist = watch('title');
   const slug = titleExist ? titleExist.toLowerCase().replace(/\s+/g, '-') : '';
+  const userUID = user.uid;
 
 
   const onSubmit = async (data) => {
-    await setValue('slug', slug);
+    setValue('slug', slug);
+    setValue('userUID', userUID);
     await AddNewRecipe(data);
+    reset();
+    
   }
   
   return (
@@ -78,7 +86,7 @@ export default function AddRecipe() {
         <button 
           className="font-bold text-lightOrange"
           onClick={uploadImage}
-        >UPLOAD IMAGE</button>
+        >UPLOAD</button>
     </div>
     <form onSubmit={handleSubmit(onSubmit)} className='m-5 font-Sabon text-spaceCadet'>
       <div className="grid gap-6 md:grid-cols-2 mb-10">
@@ -155,7 +163,7 @@ export default function AddRecipe() {
         </label>
         {ingFields.map((field, index) => {
           return (
-            <section key={field.id} className='flex flex-row justify-end gap-x-3'>
+            <section key={field.id} className='flex flex-row justify-end gap-x-3 my-2'>
               <div className="basis-6/12">
                 <label className="block mb-2 text-sm">
                   <span>Item:</span>
@@ -199,7 +207,7 @@ export default function AddRecipe() {
         </label>
       {stepFields.map((field, index) => {
           return (
-            <section key={field.id} className='flex flex-row justify-end gap-x-3 md-2'>
+            <section key={field.id} className='flex flex-row justify-end gap-x-3 my-2'>
               <div className="basis-11/12">
                 <label className="block mb-2 text-sm">
                     <span>{index ? `Step ${index}:` : 'Prep:'}</span>
