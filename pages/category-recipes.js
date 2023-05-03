@@ -62,6 +62,7 @@ function CategoryRecipes() {
                 title={recipe.title}
                 description={recipe.description}
                 ID={recipe.id}
+                cookTime={recipe.cookTime}
                 />
             ))}
         </div>
