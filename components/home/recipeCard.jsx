@@ -23,7 +23,7 @@ function RecipeCard({title, imageUrl, description, ID, cookTime}) {
         </div>
         <div className="grid grid-cols-4 grid-rows-3 p-5 bg-white text-xs gap-2">
             <h3 className="row-start-1 col-span-2 font-bold">{title}</h3>
-            <h3 className="row-start-1 col-start-4 text-end">{cookTime} </h3>
+            <h3 className="row-start-1 col-start-4 text-end">{cookTime}</h3>
             <p className="row-start-2 col-span-full">{description}...</p>
             <Link className='text-rosyBrown row-start-3 col-start-4 text-bold text-end'
                 href={`/recipe/${ID}`}>

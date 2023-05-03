@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from 'react-toastify';
 
 const RecipeUpdateForm = ({ recipe, closeUpdateForm }) => {
-  const { register, handleSubmit, reset, control, errors, isSubmitting } = useForm({
+  const { register, handleSubmit, reset, control, errors } = useForm({
     defaultValues: recipe
   });
   const [isUpdating, setIsUpdating] = useState(false);
@@ -38,7 +38,7 @@ const RecipeUpdateForm = ({ recipe, closeUpdateForm }) => {
   })
 
   return (
-    <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center '>
+    <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center z-10 '>
       <div className='bg-gray-100 rounded-md p-10 overflow-y-scroll max-h-[90vh] relative'>
         <button className='h-10 w-10 absolute -top-2 -left-2' onClick={closeUpdateForm}>
             <FontAwesomeIcon icon={faCircleXmark} style={{color: "#191919",}} />
@@ -195,9 +195,9 @@ const RecipeUpdateForm = ({ recipe, closeUpdateForm }) => {
           <div className="mb-6">
             <button 
                 type="submit"
-                disabled={isSubmitting} 
+                disabled={isUpdating} 
                 className="w-4/12 h-12 recipeInput bg-lightOrange text-white flex justify-center m-auto font-All-Round-Gothic text-xl">
-                {isSubmitting ? 'Submitting...' : 'UPDATE'}
+                {isUpdating ? 'Updating...' : 'UPDATE'}
             </button>
           </div>
         </form>

@@ -106,24 +106,12 @@ const Home = () => {
           title={recipe.title}
           description={recipe.description}
           ID={recipe.id}
-          time={recipe.cookTime}
+          cookTime={recipe.cookTime}
         />
       ))}
       </div>
     </div>
   )
 }
-
-// export async function getStaticProps() {
-//   const recipes = await getAllRecipes();
-
-
-//   return {
-//     props: {
-//       recipes,
-//     },
-//   };
-// }
-
 
 export default (Home)
