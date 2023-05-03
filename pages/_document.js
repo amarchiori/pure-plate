@@ -1,4 +1,4 @@
-import { Html, Head, Main, NextScript, Script } from 'next/document'
+import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
   const isProd = process.env.NODE_ENV === "production";
@@ -17,15 +17,15 @@ export default function Document() {
 
         {isProd && (
           <>
-            <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}/>
-            <Script id="google-analytics" strategy="afterInteractive">
+            <script strategy="afterInteractive" async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}/>
+            <script id="google-analytics" strategy="afterInteractive">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
                 gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
               `}
-            </Script>
+            </script>
           </> )}
       </Head>
       <body className='bg-white'>
