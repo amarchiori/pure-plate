@@ -23,6 +23,9 @@ module.exports = {
         rosyBrown: '#D5A18E',
         spaceCadet: '#191919',
       },
+      saturate: {
+        125: '1.25',
+      }
     },
   },
   plugins: [

@@ -32,6 +32,19 @@ export const FavoriteProvider = ({ children }) => {
   const [favCount, setFavCount] = useState(0);
 
   useEffect(() => {
+    // Load the favorite items from localStorage when the component mounts
+    const storedFavItems = localStorage.getItem("favItems");
+    if (storedFavItems) {
+      setFavItems(JSON.parse(storedFavItems));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save the favorite items to localStorage whenever they change
+    localStorage.setItem("favItems", JSON.stringify(favItems));
+  }, [favItems]);
+
+  useEffect(() => {
     const newFavCount = favItems.reduce(
       (total, favItem) => total + favItem.quantity,
       0
@@ -41,12 +54,10 @@ export const FavoriteProvider = ({ children }) => {
 
   const addItemToFav = (recipeToAdd) => {
     setFavItems(addFavItem(favItems, recipeToAdd));
-    console.log(favItems)
   };
 
   const clearItemFromFav = (favItemToClear) => {
     setFavItems(clearFavItem(favItems, favItemToClear));
-    console.log(favItems)
   };
 
   const value = {

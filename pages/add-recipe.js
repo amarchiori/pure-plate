@@ -1,22 +1,28 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { storage } from "@/utils/firebase";
 import { ref, getDownloadURL, uploadBytes} from "firebase/storage";
-import { AddNewRecipe } from "@/utils/firestore/firestore";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from 'react-toastify';
 import withAuth from "@/utils/withAuth";
+import { UserContext } from "@/contexts/UserProvider";
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from "@/utils/firebase";
+import { useRouter } from "next/router";
 
 const AddRecipe = () => {
+  const {user} = useContext(UserContext)
+  const router = useRouter();
   const [imageUpload, setImageUpload] = useState(null)
-  const { register, setValue, formState: {errors}, watch, control, handleSubmit, isSubmitting, reset,
+  const [isUploading, setIsUploading] = useState(false);
+  const { register, setValue, formState: {errors}, control, handleSubmit, isSubmitting, reset,
   } = useForm({
     defaultValues: {
       category: '',
-      imageUrl: '',
+      imageUrl: '' | null,
       title: '',
-      slug: '',
+      addedBy: '',
       servingSize: '',
       cookTime: '',
       description: '',
@@ -43,27 +49,29 @@ const AddRecipe = () => {
 
   const uploadImage = () => {
     if (imageUpload == null) return;
+    setIsUploading(true);
     const imageRef = ref(storage, `userUploads/${imageUpload.name}`);
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((downloadURL) => {
         setValue('imageUrl', downloadURL);
+        setIsUploading(false);
         toast.success('Upload Complete!')
         console.log(downloadURL)
       })
     })
   }
 
-  const titleExist = watch('title');
-  const slug = titleExist ? titleExist.toLowerCase().replace(/\s+/g, '-') : '';
-
-
-
   const onSubmit = async (data) => {
-    setValue('slug', slug);
-    await AddNewRecipe(data);
-    reset();
-    return true;
-  }
+    try {
+      const recipeRef = await addDoc(collection(db, "recipes"), {
+        ...data,
+        addedBy: user.uid,
+      });
+      router.push(`recipe/${recipeRef.id}`);
+    } catch (error) {
+      console.error("Error adding recipe: ", error);
+    }
+  };
   
   return (
     <div className="m-5 sm:w-10/12 md:w-7/12 sm:m-auto">
@@ -83,7 +91,8 @@ const AddRecipe = () => {
         <button 
           className="font-bold text-lightOrange"
           onClick={uploadImage}
-        >UPLOAD</button>
+          disabled={isUploading}
+        >{isUploading ? "Uploading..." : "UPLOAD"}</button>
     </div>
     <form onSubmit={handleSubmit(onSubmit)} className='m-5 font-Sabon text-spaceCadet'>
       <div className="grid gap-6 md:grid-cols-2 mb-10">
@@ -103,7 +112,7 @@ const AddRecipe = () => {
         </div>
         <div >
             <label className="block mb-2 text-md font-bold">
-                Title - {slug}
+                Title
             </label>
             <input 
                 type="text"

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db} from '../utils/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -26,5 +26,12 @@ export default function UserDisplay() {
       getUserDisplayName();
     }, [user]);
     
-    return <div className='text-center'>Welcome, <br/> {displayName}!</div>;
+    return (
+      <div className='text-black z-10 text-center md:pl-14 bg-white/50 backdrop-blur-sm p-5'>
+        <h1 className='text-3xl md:text-4xl'>Welcome, 
+          <span className='font-bold block'>{displayName}!</span>
+        </h1>
+        <p className='text-base pt-2 md:pt-4'>Don&apos;t forget to add your own family recipes</p>
+      </div>
+    )
   }

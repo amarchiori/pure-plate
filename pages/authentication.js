@@ -1,5 +1,5 @@
-import SignIn from "@/components/signIn"
-import SignUp from "@/components/signUp"
+import SignIn from "@/components/authpage/signIn"
+import SignUp from "@/components/authpage/signUp"
 import Head from "next/head"
 
 const AuthPage = () => {

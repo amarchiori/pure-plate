@@ -1,64 +1,47 @@
 import { 
     getFirestore,
-    getDoc,
-    doc,
-    setDoc,
     collection,
-    getDocs,
+    addDoc,
+    where,
+    query,
+    onSnapshot,
+    deleteDoc,
+    doc
 } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { app} from '../firebase'
+import { auth } from '../auth/auth';
+import { db } from '../firebase';
 
-export const getCategories = async () => {
-    const db = getFirestore(app);
-    const categoriesRef = collection(db, 'Categories');
-  
-    try{
-      const querySnapshot = await getDocs(categoriesRef);
-      const categories = querySnapshot.docs.map((doc) => doc.data());
-  
-      return categories;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
-  };
-  
-  export const getRecipesByCategory = async (category) => {
-    const db = getFirestore(app);
-    const recipesRef = collection(db, `Categories/${category}/recipes` );
-    
-    try{
-      const querySnapshot = await getDocs(recipesRef);
-      const recipes = querySnapshot.docs.map((doc) => doc.data());
-      return recipes;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
-    
-  }
+export const deleteUserRecipe = async (id) => {
+  const db = getFirestore(app);
+    await deleteDoc(doc(db, "recipes", id));
+    return console.log("deleted:", id)
+}
+
+export const useUserRecipes = () => {
+  const [user] = useAuthState(auth);
+  const [userRecipes, setUserRecipes] = useState([]);
+  const recipesRef = collection(db, 'recipes');
+
+  useEffect(() => {
+    const q = query(recipesRef, where('addedBy', '==', user.uid));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const updatedRecipes = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setUserRecipes(updatedRecipes);
+    });
+
+    return () => unsubscribe();
+  }, [recipesRef, user]);
+
+  return userRecipes;
+};
   
   
-  export const AddNewRecipe = async (data) => {
-    const db = getFirestore(app);
-    const categoryPath = data.category;
-    const slugPath = data.slug;
-    await setDoc(doc(db, `Categories/${categoryPath}/recipes/${slugPath}`), data);
-    return console.log(data)
-  }
   
-  
-  export const getIndividualRecipe = async(categoryId, slug) => {
-    const db = getFirestore(app);
-    const docRef = doc(db, "Categories", categoryId, "recipes", slug);
-    const docSnap = await getDoc(docRef);
-  
-    if (docSnap.exists()) {
-      const IndividualRecipe = docSnap.data()
-      return IndividualRecipe;
-    } else {
-      console.log('No such document')
-    }
-  }
   

@@ -1,6 +1,7 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/router';
 import { auth } from './auth/auth';
+import LoadingAnimation from '@/components/Layout/loadingAnimation';
 
 const withAuth = (WrappedComponent) => {
   const Auth = (props) => {
@@ -8,7 +9,7 @@ const withAuth = (WrappedComponent) => {
     const router = useRouter();
 
     if (loading) {
-      return <p>Loading...</p>;
+      return <LoadingAnimation/>;
     }
 
     if (!user) {
