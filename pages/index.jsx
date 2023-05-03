@@ -52,6 +52,7 @@ const Home = () => {
             alt='lemon leaves bg'
             fill
             className='object-cover saturate-125 z-0'
+            priority={true}
           />
         </div>
         {

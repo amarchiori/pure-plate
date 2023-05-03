@@ -32,16 +32,18 @@ const SignUp = () => {
 
     return (
         <>
-        <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-White b">
-            <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
+        <div className="md:w-1/2 w-11/12">
+            <div className="block p-10 xl:p-32">
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    <p className="text-4xl mb-12 text-lightOrange text-center uppercase font-All-Round-Gothic">
+                        Create Account
+                    </p>
                     <div >
                         <div className="mb-6">
-                            <label>
-                                Name
                             <input 
                                 type="text"
                                 {...register('displayName', {required: true})} 
+                                placeholder='Name'
                                 className="form-input
                                 block
                                 w-full
@@ -59,15 +61,13 @@ const SignUp = () => {
                                 focus:text-gray-700 focus:bg-white focus:border-youngYellow focus:outline-none"
                             />
                             {errors.displayName && <span>This field is required</span>}
-                            </label>
                         </div>
 
                     <div className="mb-6">
-                        <label>
-                            Email
                         <input 
                             type="email" 
                             {...register('email', {required: true})}
+                            placeholder='Email'
                                 className="block
                                 w-full
                                 px-3
@@ -84,14 +84,12 @@ const SignUp = () => {
                                 focus:text-gray-700 focus:bg-white focus:border-youngYellow focus:outline-none"
                         />
                             {errors.email && <span>This field is required</span>}
-                        </label>
                     </div>
                     <div className="mb-6">
-                        <label>
-                            Password
                         <input 
                         type="password" 
                         {...register('password', {required: true, minLength: 8})}
+                        placeholder='Password'
                             className=" block
                             w-full
                             px-3
@@ -108,7 +106,6 @@ const SignUp = () => {
                             focus:text-gray-700 focus:bg-white focus:border-youngYellow focus:outline-none"
                         />
                         {errors.password && <span>This field is required and must be at least 8 characters long</span>}
-                        </label>
                     </div>
                     <button 
                         type="submit"

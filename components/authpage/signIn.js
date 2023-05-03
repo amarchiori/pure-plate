@@ -34,14 +34,14 @@ const SignIn = () => {
 
   return (
     <>
-        <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-White b">
-            <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
+        <div className="md:w-1/2 w-11/12">
+            <div className="block p-10 xl:p-32">
                 <form onSubmit={(e) => {
                     e.preventDefault();
                     signInWIthForm();
                 }}>
                     <p className="text-4xl mb-4 text-lightOrange text-center uppercase font-All-Round-Gothic">
-                        Sign In With
+                        Login With
                     </p>
                     <div className="flex flex-row items-center justify-center ">
 
